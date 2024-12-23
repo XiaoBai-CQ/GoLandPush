@@ -19,7 +19,6 @@ var (
 )
 
 func main() {
-	CreateTopic()
 	ctx := context.Background()
 	writeKafka(ctx)
 	go listenSignal()
@@ -91,6 +90,7 @@ func writeKafka(ctx context.Context) {
 	}
 	defer writer.Close()
 	// 函数允许传入不定长的消息，原子性操作
+	time.Sleep(5 * time.Second)
 	if err := writer.WriteMessages(ctx,
 		kafka.Message{Key: []byte("1"), Value: []byte("h")},
 		kafka.Message{Key: []byte("2"), Value: []byte("e")},
